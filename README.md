@@ -1,4 +1,7 @@
 # TextTransformer project
+
+![Java CI](https://github.com/Kajetan-W/TextTransformer_project/actions/workflows/java-ci.yml/badge.svg)
+
 The application is designed for people working with text data. It allows users to transform text by applying selected operations, such as changing letter case, reversing text, eliminating duplicated words, or escaping special characters. The application will be available through a remote REST API and GUI, thanks to which it can be integrated with existing tools.
 
 ## Project Description
