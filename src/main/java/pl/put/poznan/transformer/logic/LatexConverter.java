@@ -1,3 +1,5 @@
+package pl.put.poznan.transformer.logic;
+
 /**
  * The {@code LatexConverter} class provides utility functionality to sanitize plain text 
  * strings into safe, LaTeX-compliant formats.
