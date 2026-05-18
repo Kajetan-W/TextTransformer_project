@@ -1,3 +1,5 @@
+package pl.put.poznan.transformer.logic;
+
 /**
  * The {@code CaseModifier} class provides utility methods for altering the casing
  * of string text. 

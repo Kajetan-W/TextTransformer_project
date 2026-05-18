@@ -1,3 +1,5 @@
+package pl.put.poznan.transformer.logic;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
