@@ -1,3 +1,5 @@
+package pl.put.poznan.transformer.logic;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

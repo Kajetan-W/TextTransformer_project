@@ -1,3 +1,5 @@
+package pl.put.poznan.transformer.logic;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -11,7 +13,7 @@ import java.util.regex.Pattern;
  * and preserves the capitalization of the first letter of the acronym during expansion.
  * 
  * 
- * <p><bExample:</b></p>
+ * <p><b></b>Example:</b></p>
  * <pre>
  * AcronymExpander expander = new AcronymExpander();
  * String result = expander.expandAcronyms("Prof. Smith and Dr. John, e.g., went there.");
@@ -86,14 +88,11 @@ public class AcronymExpander {
                     expansion = Character.toUpperCase(expansion.charAt(0)) + expansion.substring(1);
                 }
 
-                // Append the text preceding the match, followed by the modified expansion
                 matcher.appendReplacement(sb, expansion);
             }
 
-            // Append any remaining text after the last match found for this acronym
             matcher.appendTail(sb);
-            
-            // Pass the updated text string into the next iteration for subsequent acronym checks
+
             result = sb.toString();
         }
         

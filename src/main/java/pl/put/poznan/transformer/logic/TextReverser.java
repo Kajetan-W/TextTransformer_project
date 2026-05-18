@@ -1,3 +1,5 @@
+package pl.put.poznan.transformer.logic;
+
 /**
  * The {@code TextReverser} class provides utility functionality to reverse the sequence 
  * of characters in a string while strictly preserving the case structure (uppercase vs. lowercase) 
