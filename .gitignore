@@ -34,3 +34,7 @@ target/
 
 # macOS
 .DS_Store
+
+# postman
+.postman/
+postman/
