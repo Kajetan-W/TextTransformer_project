@@ -1,0 +1,13 @@
+$kind: http-request
+url: http://localhost:8080/transform
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"text\": \"dr Lewy & prof. Dog said e.g. the price is 777 333 dollars dollars\",\r
+
+    \  \"transforms\": [\"expand\", \"numbers\", \"duplicates\", \"latex\", \"upper\"]\r
+
+    }"
+order: 2604835794551489

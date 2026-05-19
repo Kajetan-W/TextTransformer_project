@@ -1,0 +1,14 @@
+$kind: http-request
+name: test2
+url: http://localhost:8080/transform
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"text\": \"999, 555, 1000\",\r
+
+    \  \"transforms\": [\"numbers\"]\r
+
+    }"
+order: 246804226105458

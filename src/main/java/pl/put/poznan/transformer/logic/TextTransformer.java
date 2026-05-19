@@ -1,5 +1,13 @@
 package pl.put.poznan.transformer.logic;
 
+/**
+ * Entry point for applying a sequence of text transformations.
+ * Builds a decorator chain from the provided transform names and executes them in order.
+ *
+ * @author Kajetan Wojnicki
+ * @author Otylia Przyłucka
+ * @version 1.0
+ */
 public class TextTransformer {
 
     private final String[] transforms;
@@ -8,20 +16,25 @@ public class TextTransformer {
         this.transforms = transforms;
     }
 
+    /**
+     * Applies all configured transformations to the input text in order.
+     *
+     * @param text the input text
+     * @return the transformed text
+     */
     public String transform(String text) {
-        String result = text == null ? "" : text;
+        String input = text == null ? "" : text;
 
         if (transforms == null) {
-            return result;
+            return input;
         }
 
-        CaseModifier caseModifier = new CaseModifier();
-        TextReverser textReverser = new TextReverser();
-        LatexConverter latexConverter = new LatexConverter();
-        AcronymReplacer acronymReplacer = new AcronymReplacer();
-        AcronymExpander acronymExpander = new AcronymExpander();
-        NumberToTextConverter numberToTextConverter = new NumberToTextConverter();
-        RepetetiveWordEliminator repetitiveWordEliminator = new RepetetiveWordEliminator();
+        TextTransform pipeline = new TextTransform() {
+            @Override
+            public String transform(String text) {
+                return text;
+            }
+        };
 
         for (String transform : transforms) {
             if (transform == null) {
@@ -32,45 +45,45 @@ public class TextTransformer {
 
             switch (name) {
                 case "upper":
-                    result = caseModifier.toUpper(result);
+                    pipeline = new CaseModifier(pipeline, "upper");
                     break;
                 case "lower":
-                    result = caseModifier.toLower(result);
+                    pipeline = new CaseModifier(pipeline, "lower");
                     break;
                 case "capitalize":
-                    result = caseModifier.capitalize(result);
+                    pipeline = new CaseModifier(pipeline, "capitalize");
                     break;
                 case "inverse":
                 case "reverse":
-                    result = textReverser.reversePreservingCase(result);
+                    pipeline = new TextReverser(pipeline);
                     break;
                 case "latex":
                 case "escape":
-                    result = latexConverter.convertToLatex(result);
+                    pipeline = new LatexConverter(pipeline);
                     break;
                 case "acronym":
                 case "acronyms":
                 case "replace":
-                    result = acronymReplacer.replaceWithAcronyms(result);
+                    pipeline = new AcronymReplacer(pipeline);
                     break;
                 case "expand":
                 case "expander":
-                    result = acronymExpander.expandAcronyms(result);
+                    pipeline = new AcronymExpander(pipeline);
                     break;
                 case "number":
                 case "numbers":
-                    result = numberToTextConverter.convertNumberToText(result);
+                    pipeline = new NumberToTextConverter(pipeline);
                     break;
                 case "duplicates":
                 case "repetitions":
                 case "repetitive":
-                    result = repetitiveWordEliminator.eliminateRepetitions(result);
+                    pipeline = new RepetetiveWordEliminator(pipeline);
                     break;
                 default:
                     break;
             }
         }
 
-        return result;
+        return pipeline.transform(input);
     }
 }

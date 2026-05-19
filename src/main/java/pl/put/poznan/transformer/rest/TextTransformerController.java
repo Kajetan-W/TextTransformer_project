@@ -15,11 +15,26 @@ import java.util.Collections;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * REST controller exposing the {@code /transform} endpoint for text transformation requests.
+ * Supports both GET (query parameters) and POST (JSON body) methods.
+ *
+ * @author Kajetan Wojnicki
+ * @author Otylia Przyłucka
+ * @version 1.0
+ */
 @RestController
 public class TextTransformerController {
 
     private static final Logger logger = LoggerFactory.getLogger(TextTransformerController.class);
 
+    /**
+     * Handles GET requests with text and transforms as query parameters.
+     *
+     * @param text       the input text to transform
+     * @param transforms array of transformation names to apply
+     * @return a {@link TransformResponse} with the original input and transformed result
+     */
     @GetMapping(value = "/transform", produces = "application/json")
     public TransformResponse transformGet(
             @RequestParam(value = "text", defaultValue = "") String text,
@@ -32,6 +47,12 @@ public class TextTransformerController {
         return transform(text, selectedTransforms);
     }
 
+    /**
+     * Handles POST requests with a JSON body containing text and transforms.
+     *
+     * @param request the {@link TransformRequest} containing input text and transformation list
+     * @return a {@link TransformResponse} with the original input and transformed result
+     */
     @PostMapping(value = "/transform", consumes = "application/json", produces = "application/json")
     public TransformResponse transformPost(@RequestBody TransformRequest request) {
         String text = request.getText() == null ? "" : request.getText();
