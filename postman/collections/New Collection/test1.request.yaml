@@ -1,0 +1,13 @@
+$kind: http-request
+url: http://localhost:8080/transform
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"text\": \"Ala ala ala ala wants wants wants wants a dog\",\r
+
+    \  \"transforms\": [\"upper\", \"inverse\", \"duplicates\"]\r
+
+    }"
+order: 1779161701126
