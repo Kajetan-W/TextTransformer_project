@@ -10,14 +10,21 @@ package pl.put.poznan.transformer.logic;
  */
 public class TextTransformer {
 
+    /** Ordered list of transformation names to apply. */
     private final String[] transforms;
 
+    /**
+     * Constructs a TextTransformer that will apply the named transformations in order.
+     *
+     * @param transforms the names of transformations to apply; {@code null} entries are skipped
+     */
     public TextTransformer(String[] transforms) {
         this.transforms = transforms;
     }
 
     /**
      * Applies all configured transformations to the input text in order.
+     * A {@code null} input is treated as an empty string.
      *
      * @param text the input text
      * @return the transformed text

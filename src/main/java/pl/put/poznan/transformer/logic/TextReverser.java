@@ -11,15 +11,33 @@ package pl.put.poznan.transformer.logic;
  */
 public class TextReverser extends TextTransformDecorator {
 
+    /**
+     * Constructs a TextReverser that delegates to the given transformation.
+     *
+     * @param wrapped the next transformation in the chain
+     */
     public TextReverser(TextTransform wrapped) {
         super(wrapped);
     }
 
+    /**
+     * Reverses the result of the wrapped transformer while preserving positional casing.
+     *
+     * @param text the input text
+     * @return the reversed text with original casing positions retained
+     */
     @Override
     public String transform(String text) {
         return reversePreservingCase(wrapped.transform(text));
     }
 
+    /**
+     * Reverses the characters of the given text, keeping each position's original case.
+     * Letters that were uppercase stay uppercase at the same index; lowercase stay lowercase.
+     *
+     * @param text the text to reverse; returns unchanged if {@code null} or empty
+     * @return the case-position-preserving reversal of {@code text}
+     */
     public String reversePreservingCase(String text) {
         if (text == null || text.isEmpty()) return text;
 

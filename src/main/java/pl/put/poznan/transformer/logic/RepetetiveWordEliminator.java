@@ -14,15 +14,34 @@ import java.util.regex.Pattern;
  */
 public class RepetetiveWordEliminator extends TextTransformDecorator {
 
+    /**
+     * Constructs a RepetetiveWordEliminator that delegates to the given transformation.
+     *
+     * @param wrapped the next transformation in the chain
+     */
     public RepetetiveWordEliminator(TextTransform wrapped) {
         super(wrapped);
     }
 
+    /**
+     * Eliminates consecutive duplicate words from the result of the wrapped transformer.
+     *
+     * @param text the input text
+     * @return the text with consecutive duplicate words removed
+     */
     @Override
     public String transform(String text) {
         return eliminateRepetitions(wrapped.transform(text));
     }
 
+    /**
+     * Scans {@code text} for runs of the same word separated by whitespace and
+     * collapses each run to a single occurrence. Matching is Unicode-aware and
+     * case-insensitive.
+     *
+     * @param text the text to deduplicate; returned unchanged if {@code null} or empty
+     * @return the text with consecutive duplicate words collapsed to one
+     */
     public String eliminateRepetitions(String text) {
         if (text == null || text.isEmpty()) return text;
 

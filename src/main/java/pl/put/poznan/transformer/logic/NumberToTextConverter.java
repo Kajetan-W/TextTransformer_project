@@ -15,25 +15,45 @@ import java.util.regex.Pattern;
  */
 public class NumberToTextConverter extends TextTransformDecorator {
 
+    /** English words for numbers 0–19. Index corresponds to the number value. */
     private static final String[] units = {
             "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
             "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
             "seventeen", "eighteen", "nineteen"
     };
 
+    /** English words for multiples of ten from 20 to 90. Index corresponds to the tens digit. */
     private static final String[] tens = {
             "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"
     };
 
+    /**
+     * Constructs a NumberToTextConverter that delegates to the given transformation.
+     *
+     * @param wrapped the next transformation in the chain
+     */
     public NumberToTextConverter(TextTransform wrapped) {
         super(wrapped);
     }
 
+    /**
+     * Converts numbers in the result of the wrapped transformer to English words.
+     *
+     * @param text the input text
+     * @return the text with all numeric literals replaced by their word equivalents
+     */
     @Override
     public String transform(String text) {
         return convertNumberToText(wrapped.transform(text));
     }
 
+    /**
+     * Scans {@code text} for integer and decimal number literals and replaces each
+     * with its English word equivalent. Decimals use "point" as the separator.
+     *
+     * @param text the text to process; returned unchanged if {@code null} or empty
+     * @return the text with numbers converted to words
+     */
     public String convertNumberToText(String text) {
         if (text == null || text.isEmpty()) return text;
 
@@ -67,7 +87,10 @@ public class NumberToTextConverter extends TextTransformDecorator {
     }
 
     /**
-     * Converts a single integer (0–999) to its English word representation.
+     * Converts a single integer in the range 0–999 to its English word representation.
+     *
+     * @param number the integer to convert; must be in [0, 999]
+     * @return the English word representation of {@code number}
      */
     private String convertInteger(int number) {
         if (number == 0) return "zero";

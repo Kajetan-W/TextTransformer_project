@@ -26,7 +26,14 @@ import java.util.List;
 @RestController
 public class TextTransformerController {
 
+    /** Logger for this controller. */
     private static final Logger logger = LoggerFactory.getLogger(TextTransformerController.class);
+
+    /**
+     * Default constructor used by Spring to instantiate this controller bean.
+     */
+    public TextTransformerController() {
+    }
 
     /**
      * Handles GET requests with text and transforms as query parameters.
@@ -64,6 +71,13 @@ public class TextTransformerController {
         return transform(text, transforms);
     }
 
+    /**
+     * Builds a {@link TextTransformer}, runs the transformation pipeline, and wraps the result.
+     *
+     * @param text       the input text
+     * @param transforms the ordered list of transformation names to apply
+     * @return a {@link TransformResponse} containing the input, transformations, and result
+     */
     private TransformResponse transform(String text, List<String> transforms){
         logger.info("Received text transformation request");
         logger.debug("Input text: {}", text);
@@ -74,5 +88,3 @@ public class TextTransformerController {
         return new TransformResponse(text, transforms, result);
     }
 }
-
-

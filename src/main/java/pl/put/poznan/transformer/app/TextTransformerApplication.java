@@ -14,6 +14,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class TextTransformerApplication {
 
     /**
+     * Default constructor used by Spring Boot during application startup.
+     */
+    public TextTransformerApplication() {
+    }
+
+    /**
      * Launches the Spring Boot application.
      *
      * @param args command-line arguments passed during startup

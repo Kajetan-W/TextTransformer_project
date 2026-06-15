@@ -17,8 +17,17 @@ import java.util.regex.Pattern;
  */
 public class AcronymExpander extends TextTransformDecorator {
 
+    /**
+     * Maps regex patterns (keys) to their expanded forms (values).
+     * Iteration order is preserved via {@link LinkedHashMap}.
+     */
     private final Map<String, String> expansionMap;
 
+    /**
+     * Constructs an AcronymExpander with a built-in set of abbreviation mappings.
+     *
+     * @param wrapped the next transformation in the chain
+     */
     public AcronymExpander(TextTransform wrapped) {
         super(wrapped);
         expansionMap = new LinkedHashMap<>();
@@ -28,11 +37,24 @@ public class AcronymExpander extends TextTransformDecorator {
         expansionMap.put("aso", "and so on");
     }
 
+    /**
+     * Expands acronyms in the result of the wrapped transformer.
+     *
+     * @param text the input text
+     * @return the text with known acronyms expanded
+     */
     @Override
     public String transform(String text) {
         return expandAcronyms(wrapped.transform(text));
     }
 
+    /**
+     * Scans {@code text} for known acronyms and replaces each with its full form,
+     * mirroring the capitalization of the first character of the matched token.
+     *
+     * @param text the text to process; returned unchanged if {@code null} or empty
+     * @return the text with acronyms replaced by their expansions
+     */
     public String expandAcronyms(String text) {
         if (text == null || text.isEmpty()) return text;
 
